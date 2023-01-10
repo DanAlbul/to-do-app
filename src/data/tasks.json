@@ -2,41 +2,49 @@
   {
     "content": "Finish 2nd part of 'Anubis' project during",
     "completed": false,
-    "category": "work-cat"
+    "category": "work-cat",
+    "id": "001"
   },
   {
     "content": "Take pills and vitamines",
     "completed": false,
-    "category": "health-cat"
+    "category": "health-cat",
+    "id": "002"
   },
   {
     "content": "Pick up delivery",
     "completed": false,
-    "category": "personal-cat"
+    "category": "personal-cat",
+    "id": "003"
   },
   {
     "content": "Buy some foods",
     "completed": false,
-    "category": "shopping-cat"
+    "category": "shopping-cat",
+    "id": "004"
   },
   {
     "content": "Meditate for 20m",
     "completed": true,
-    "category": "personal-cat"
+    "category": "personal-cat",
+    "id": "005"
   },
   {
     "content": "Make a journal note",
     "completed": true,
-    "category": "personal-cat"
+    "category": "personal-cat",
+    "id": "006"
   },
   {
     "content": "Clean the PC inside",
     "completed": true,
-    "category": "personal-cat"
+    "category": "personal-cat",
+    "id": "007"
   },
   {
     "content": "Go to the cinema",
     "completed": true,
-    "category": "personal-cat"
+    "category": "personal-cat",
+    "id": "008"
   }
 ]
