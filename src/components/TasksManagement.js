@@ -1,12 +1,13 @@
 import { useContext } from 'react';
 import { TasksContext } from './Context';
+import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
+import Tooltip from '@mui/material/Tooltip';
 
 export const TasksManagement = () => {
   const { view, setView } = useContext(TasksContext);
 
   function addTask(e) {
     const message = e.target.value;
-    
   }
 
   function swithView() {
@@ -30,10 +31,22 @@ export const TasksManagement = () => {
         name="tasks-management"
         placeholder="Write a new task"
       />
-			
-      <button className="show_completed_btn" onClick={swithView}>
-        L
-      </button>
+      <Tooltip
+        title={view === 'not-completed' ? 'Show completed' : 'Show ongoing'}
+        placement="right"
+      >
+        <a
+          className="btn-floating waves-effect waves-red show_completed_btn"
+          onClick={swithView}
+        >
+          <PlaylistAddCheckOutlinedIcon
+            style={{
+              margin: '0 auto 3px auto',
+              verticalAlign: 'middle',
+            }}
+          />
+        </a>
+      </Tooltip>
     </div>
   );
 };
