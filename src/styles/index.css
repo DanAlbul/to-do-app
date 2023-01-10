@@ -52,10 +52,19 @@ body {
 .tasks_wrapper {
   margin: 0 0 2rem 0;
   padding: 1rem;
-  max-height: 310px;
+  max-height: 610px;
   overflow-y: auto;
   scrollbar-gutter: stable both-edges;
   border-bottom: 2px solid #eb1d36;
+}
+
+.tasks_wrapper ul {
+  /*   animation-duration: 0.5s;
+  animation-name: animate-fade;
+  animation-delay: 0.5s;
+  animation-fill-mode: backwards; */
+  transition: all 1s linear;
+  -webkit-transition: all 1s linear;
 }
 
 .task-main {
@@ -165,3 +174,12 @@ li {
 .completed {
   text-decoration: line-through;
 }
+
+/* @keyframes animate-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+} */
