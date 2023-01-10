@@ -36,7 +36,11 @@ export const TasksList = ({ tasks }) => {
   }, [view, tasks]);
 
   return (
-    <div className="tasks_wrapper">
+    <div
+      className={`${
+        filteredTasks.length > 10 ? 'multiple-list' : ''
+      } tasks_wrapper`}
+    >
       <ul>{filteredTasks}</ul>
     </div>
   );
