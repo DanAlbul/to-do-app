@@ -90,14 +90,14 @@ export const TasksList = ({ tasks }) => {
     switch (view) {
       case 'completed':
         {
-          taskList = tasks.filter((item) => !item.completed);
+          taskList = tasks.filter((item) => item.completed);
           //setCompleted(true);
         }
         break;
 
       case 'not-completed':
         {
-          taskList = tasks.filter((item) => item.completed);
+          taskList = tasks.filter((item) => !item.completed);
           // setCompleted(false);
         }
         break;
