@@ -46,5 +46,53 @@
     "completed": true,
     "category": "personal-cat",
     "id": "008"
+  },
+  {
+    "content": "Meditate for 20m",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "009"
+  },
+  {
+    "content": "Make a journal note",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "010"
+  },
+  {
+    "content": "Clean the PC inside",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "011"
+  },
+  {
+    "content": "Go to the cinema",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "012"
+  },
+  {
+    "content": "Meditate for 20m",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "013"
+  },
+  {
+    "content": "Make a journal note",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "014"
+  },
+  {
+    "content": "Clean the PC inside",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "015"
+  },
+  {
+    "content": "Go to the cinema",
+    "completed": true,
+    "category": "personal-cat",
+    "id": "016"
   }
 ]
