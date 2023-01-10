@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext, useCallback, useEffect, useMemo } from 'react';
 import TASKS from './data/tasks.json';
-/* import { createContext } from 'react';
- */
+import { createContext } from 'react';
 
-/* const TasksContext = createContext({
-  done: true,
-}); */
+const TasksContext = createContext({
+  view: 'not-completed',
+  setView: () => {},
+});
 
 export const Widget = () => {
   const date = new Date();
@@ -51,13 +51,8 @@ export const Widget = () => {
   );
 };
 
-export const TaskItem = ({ content, category }) => {
+export const TaskItem = ({ content, category, done }) => {
   const [completed, setCompleted] = useState(false);
-
-  /*   useEffect(() => {
-
-
-  }, completed) */
 
   function toggleStatus() {
     setCompleted(!completed);
@@ -73,7 +68,7 @@ export const TaskItem = ({ content, category }) => {
             type="checkbox"
             name="task"
           />
-          <span className={`${completed ? 'completed' : ''} task`}>
+          <span className={`${completed || done ? 'completed' : ''} task`}>
             {content}
           </span>
         </label>
@@ -84,30 +79,71 @@ export const TaskItem = ({ content, category }) => {
 };
 
 export const TasksList = ({ tasks }) => {
-  //const [listType, setListType] = useState();
+  const { view, setView } = useContext(TasksContext);
+  //const [completed, setCompleted] = useState(false);
 
-  //const taskType = useContext(TasksContext);
+  useEffect(() => {});
 
-  const tasksList = [];
+  const filteredTasks = useMemo(() => {
+    let taskList = [];
 
-  tasks.forEach((task) => {
-    tasksList.push(
-      <li key={task.category}>
-        <TaskItem content={task.content} category={task.category} />
-      </li>
-    );
-  });
+    switch (view) {
+      case 'completed':
+        {
+          taskList = tasks.filter((item) => !item.completed);
+          //setCompleted(true);
+        }
+        break;
 
+      case 'not-completed':
+        {
+          taskList = tasks.filter((item) => item.completed);
+          // setCompleted(false);
+        }
+        break;
+    }
+
+    return taskList.map((task) => {
+      return (
+        <li key={task.id}>
+          <TaskItem
+            content={task.content}
+            category={task.category}
+            done={task.completed}
+          />
+        </li>
+      );
+    });
+  }, [view]);
+
+  console.log(filteredTasks);
   return (
     <div className="tasks_wrapper">
-      {/* <TasksContext.Provider value={listType}> */}
-      <ul>{tasksList}</ul>
-      {/*  </TasksContext.Provider> */}
+      <ul>{filteredTasks}</ul>
     </div>
   );
 };
 
 export const TasksManagement = () => {
+  const { view, setView } = useContext(TasksContext);
+
+  function swithView() {
+    console.log(view);
+
+    switch (view) {
+      case 'completed':
+        {
+          setView('not-completed');
+        }
+        break;
+      case 'not-completed':
+        {
+          setView('completed');
+        }
+        break;
+    }
+  }
+
   return (
     <div className="tasks-management">
       <input
@@ -115,18 +151,24 @@ export const TasksManagement = () => {
         name="tasks-management"
         placeholder="Write a new task"
       />
-      <button className="show_completed_btn">L</button>
+      <button className="show_completed_btn" onClick={swithView}>
+        L
+      </button>
     </div>
   );
 };
 
 export const ToDoApp = ({ tasks }) => {
- 
+  const [view, setView] = useState('not-completed');
+  const value = { view, setView };
+
   return (
     <>
-      <Widget data={`Today is Thursday : the 6th of November 2023`} />
-      <TasksList tasks={tasks} />
-      <TasksManagement />
+      <TasksContext.Provider value={value}>
+        <Widget />
+        <TasksList tasks={tasks} />
+        <TasksManagement />
+      </TasksContext.Provider>
     </>
   );
 };
