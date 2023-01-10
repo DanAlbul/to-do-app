@@ -86,14 +86,14 @@ li {
   margin: 0.5rem 0;
 }
 
-.add_task {
+.tasks-management {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 1rem;
 }
 
-.add_task input {
+.tasks-management input {
   background: #fff !important;
   border-radius: 20px !important;
   border: none !important;
@@ -138,4 +138,8 @@ li {
 
 .shopping-cat {
   border-color: red;
+}
+
+.completed {
+  text-decoration: line-through;
 }
