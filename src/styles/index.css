@@ -4,7 +4,7 @@
 @import url('./materialize.min.css');
 
 :root {
-  --add-task-size: 3rem;
+  --add-task-size: 4rem;
   --input-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
     rgba(17, 17, 26, 0.05) 0px 8px 32px;
 }
@@ -128,30 +128,73 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   gap: 1rem;
 }
 
 .tasks-management input {
+  margin: 0 !important;
+
   background: #fff !important;
   border-radius: 20px !important;
   border: none !important;
+  width: 250px !important;
   height: var(--add-task-size);
-  width: 50% !important;
   padding: 0rem 1rem !important;
   box-shadow: var(--input-shadow) !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .show_completed_btn {
   border: none;
-  width: var(--add-task-size);
-  height: var(--add-task-size);
+  /*   width: 3rem !important;
+  height: 3rem !important; */
+  margin: 0 !important;
+  padding: 0 !important;
   background-color: #fff;
   text-align: center;
   color: #000;
   border-radius: 100%;
   font-size: 25px;
   box-shadow: var(--input-shadow);
+}
+
+.add_task_btn {
+  border: none;
+  background-color: #fff;
+  color: #000;
+  height: 3rem !important;
+  width: 3rem !important;
+  box-shadow: none;
+  border-radius: 100%;
+}
+
+.add_task_btn:hover {
+  box-shadow: none !important;
+}
+
+.add_task_btn svg {
+  padding: 8px !important;
+  top: 2px;
+  font-size: 38px;
+  position: relative;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.add_task_btn svg:hover {
+  transform: scale(1.3);
+  color: green;
+}
+
+.add_task_btn svg:active {
+  transform: scale(1);
+}
+
+.btn {
+  padding: 0;
+  margin: 0;
+  background-color: #fff !important;
 }
 
 .task-category {
@@ -184,12 +227,3 @@ li {
 .completed {
   text-decoration: line-through;
 }
-
-/* @keyframes animate-fade {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-} */

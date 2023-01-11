@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { TasksContext } from './Context';
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
+import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 
 export const TasksManagement = () => {
@@ -25,15 +26,28 @@ export const TasksManagement = () => {
 
   return (
     <div className="tasks-management">
-      <input
-        onChange={addTask}
-        type="text"
-        name="tasks-management"
-        placeholder="Write a new task"
-      />
+      <div style={{ position: 'relative' }}>
+        <input
+          onChange={addTask}
+          type="text"
+          name="tasks-management"
+          placeholder="Write a new task"
+        />
+
+        <a
+          className="btn add_task_btn"
+          title="Add task"
+          style={{
+            position: 'absolute',
+            right: '0px',
+          }}
+        >
+          <AddIcon />
+        </a>
+      </div>
       <Tooltip
         title={view === 'not-completed' ? 'Show completed' : 'Show ongoing'}
-        placement="right"
+        placement="bottom"
       >
         <a
           className="btn-floating waves-effect waves-red show_completed_btn"
