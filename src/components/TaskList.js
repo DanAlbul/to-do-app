@@ -3,26 +3,24 @@ import { useContext, useState, useMemo, useEffect } from 'react';
 import { TasksContext } from './Context';
 
 export const TasksList = ({ tasks }) => {
-  const [showTasks, setShowTasks] = useState(false);
-  const { view } = useContext(TasksContext);
-
-  useEffect(() => {
-    window.localStorage.setItem('TASKS_LIST', JSON.stringify(tasks));
-  }, [view, tasks]);
+  const { view, isUpdated, setIsUpdated } = useContext(TasksContext);
+  const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST'));
 
   const filteredTasks = useMemo(() => {
+    if (isUpdated) setIsUpdated(!isUpdated);
     let taskList = [];
     switch (view) {
       case 'completed':
-        taskList = tasks.filter((item) => item.completed);
+        taskList = TASKS.filter((item) => item.completed);
         break;
 
       case 'not-completed':
-        taskList = tasks.filter((item) => !item.completed);
+        taskList = TASKS.filter((item) => !item.completed);
         break;
     }
 
     return taskList.map((task) => {
+      console.log('here 2');
       return (
         <li key={task.id}>
           <TaskItem
@@ -33,7 +31,7 @@ export const TasksList = ({ tasks }) => {
         </li>
       );
     });
-  }, [view, tasks]);
+  }, [view, isUpdated, TASKS]);
 
   return (
     <div

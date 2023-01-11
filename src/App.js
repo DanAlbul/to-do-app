@@ -3,7 +3,6 @@ import { Widget } from './components/Widget';
 import { TasksList } from './components/TaskList';
 import { TasksManagement } from './components/TasksManagement';
 import { TasksContext } from './components/Context';
-//import TASKS from './data/tasks.json';
 
 const temp = [
   {
@@ -28,7 +27,8 @@ const temp = [
 
 export const ToDoApp = ({ tasks }) => {
   const [view, setView] = useState('not-completed');
-  const value = { view, setView };
+  const [isUpdated, setIsUpdated] = useState('');
+  const value = { view, setView, isUpdated, setIsUpdated };
 
   return (
     <>
@@ -42,6 +42,8 @@ export const ToDoApp = ({ tasks }) => {
 };
 
 export const App = () => {
+  //window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
   const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp;
+  console.log('here 1');
   return <ToDoApp tasks={TASKS} />;
 };

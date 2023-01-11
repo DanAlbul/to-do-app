@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { TasksContext } from './Context';
 import { useLocalStorage } from './useLocalStorage';
 
@@ -7,10 +7,28 @@ import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 
 export const TasksManagement = () => {
-  const { view, setView } = useContext(TasksContext);
-  const [value, setValue] = useLocalStorage('');
+  const { view, setView, isUpdated, setIsUpdated } = useContext(TasksContext);
+  const [value, setValue] = useState('');
+  const [items, setItems] = useLocalStorage('TASKS_LIST', []);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const tasks = JSON.parse(localStorage.getItem('TASKS_LIST'));
+    const new_task = createNewTask(value) || null;
+    if (!new_task) return;
+
+    setIsUpdated(Date.now());
+    setItems([...tasks, new_task]); // update localStorage with new task
+
+    console.log(isUpdated);
+    setValue(''); // clear add task input field
+  };
 
   const createNewTask = (text, cat = 'other') => {
+    if (!text) return;
+    console.log(text);
+
     const uid = Math.floor(Math.random() * Date.now()).toString(16);
     const new_task = {
       content: text,
@@ -18,6 +36,8 @@ export const TasksManagement = () => {
       category: cat,
       id: uid,
     };
+
+    console.log('new_task', new_task);
 
     return new_task;
   };
@@ -38,25 +58,29 @@ export const TasksManagement = () => {
   return (
     <div className="tasks-management">
       <div style={{ position: 'relative' }}>
-        <input
-          value={value}
-          onChange={(e) => setValue(createNewTask(e.target.value))}
-          type="text"
-          name="add-task"
-          placeholder="Write a new task"
-        />
-        <a
-          type="submit"
-          htmlFor="add-task"
-          className="btn add_task_btn"
-          title="Add task"
-          style={{
-            position: 'absolute',
-            right: '0px',
-          }}
-        >
-          <AddIcon />
-        </a>
+        <form>
+          <input
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            /* onChange={(e) => setItems(createNewTask(e.target.value))} */
+            type="text"
+            name="add-task"
+            placeholder="Write a new task"
+          />
+          <button
+            type="button"
+            onClick={submitHandler}
+            htmlFor="add-task"
+            className="btn add_task_btn"
+            title="Add task"
+            style={{
+              position: 'absolute',
+              right: '0px',
+            }}
+          >
+            <AddIcon />
+          </button>
+        </form>
       </div>
       <Tooltip
         title={view === 'not-completed' ? 'Show completed' : 'Show ongoing'}

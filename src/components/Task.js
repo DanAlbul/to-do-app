@@ -3,7 +3,9 @@ import { useState } from 'react';
 export const TaskItem = ({ content, category, done }) => {
   const [completed, setCompleted] = useState(false);
 
-  function toggleStatus() {
+  function toggleStatus(e) {
+    console.log(e.target);
+   
     setCompleted(!completed);
   }
 
