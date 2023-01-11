@@ -3,12 +3,12 @@ import { useContext, useState, useMemo, useEffect } from 'react';
 import { TasksContext } from './Context';
 
 export const TasksList = ({ tasks }) => {
-  //const [showTasks, setShowTasks] = useState(false);
+  const [showTasks, setShowTasks] = useState(false);
   const { view } = useContext(TasksContext);
 
   useEffect(() => {
     window.localStorage.setItem('TASKS_LIST', JSON.stringify(tasks));
-  }, [view]);
+  }, [view, tasks]);
 
   const filteredTasks = useMemo(() => {
     let taskList = [];

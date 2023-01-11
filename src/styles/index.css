@@ -224,6 +224,10 @@ li {
   border-color: red;
 }
 
+.other-cat {
+  border-color: orange;
+}
+
 .completed {
   text-decoration: line-through;
 }
