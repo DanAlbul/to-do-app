@@ -133,6 +133,10 @@ li {
   margin: 0.5rem 0;
 }
 
+.task-block .task:hover {
+  color: rebeccapurple;
+}
+
 .tasks-management {
   display: flex;
   flex-direction: row;
@@ -239,4 +243,10 @@ li {
 
 .completed {
   text-decoration: line-through;
+}
+
+.date-of-creation {
+  font-size: 11px;
+  color: #333;
+  margin-right: 2rem;
 }

@@ -27,7 +27,6 @@ export const TasksManagement = () => {
 
   const createNewTask = (text, cat = 'other') => {
     if (!text) return;
-    console.log(text);
 
     const uid = Math.floor(Math.random() * Date.now()).toString(16);
     const new_task = {
@@ -35,9 +34,10 @@ export const TasksManagement = () => {
       completed: false,
       category: cat,
       id: uid,
+      date_created: new Date(Date.now()).toLocaleString().split(',')[0], //get date in format "dd/mm/yy", [1] - for time
     };
 
-    console.log('new_task', new_task);
+    // console.log('new_task', new_task);
 
     return new_task;
   };

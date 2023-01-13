@@ -10,18 +10,21 @@ const temp = [
     completed: false,
     category: 'personal-cat',
     id: '001',
+    date_created: '05/12/2022',
   },
   {
     content: 'Take pills and vitamines',
     completed: false,
     category: 'health-cat',
     id: '002',
+    date_created: '21/12/2022',
   },
   {
     content: 'Plan your day in to-do app',
     completed: true,
     category: 'work-cat',
     id: '003',
+    date_created: '09/01/2023',
   },
 ];
 
