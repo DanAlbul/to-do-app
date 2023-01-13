@@ -1,12 +1,27 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useLocalStorage } from './useLocalStorage';
+import { TasksContext } from './Context';
 
-export const TaskItem = ({ content, category, done }) => {
-  const [completed, setCompleted] = useState(false);
+export const TaskItem = (props) => {
+  const [completed, setCompleted] = useState(props.isCompleted);
+  const [items, setItems] = useLocalStorage('TASKS_LIST', []);
+  const { isUpdated, setIsUpdated } = useContext(TasksContext);
 
   function toggleStatus(e) {
     console.log(e.target);
-   
+
+    const tasks = JSON.parse(localStorage.getItem('TASKS_LIST'));
+    const task = tasks.find((task) => task.id === props.id);
+    task.completed = !completed;
+
+    tasks[tasks.indexOf(task)] = task;
+
+    setItems(tasks);
+
+    console.log(task);
+
     setCompleted(!completed);
+    setIsUpdated(Date.now());
   }
 
   return (
@@ -21,11 +36,12 @@ export const TaskItem = ({ content, category, done }) => {
             checked={completed}
           />
           <span className={`${completed ? 'completed' : ''} task`}>
-            {content}
+            {props.content}
           </span>
         </label>
       </div>
-      <span className={`task-category ${category}`}></span>
+      <span className={'date-of-creation'}>{props.created}</span>
+      <span className={`task-category ${props.category}`}></span>
     </div>
   );
 };
