@@ -13,7 +13,9 @@ export const TasksList = ({ tasks }) => {
 
   const filteredTasks = useMemo(() => {
     if (isUpdated) {
-      setIsUpdated(!isUpdated);
+      setTimeout(() => {
+        setIsUpdated(!isUpdated);
+      }, 250);
     }
     let taskList = [];
     switch (view) {
@@ -32,20 +34,22 @@ export const TasksList = ({ tasks }) => {
       return (
         <li key={task.id}>
           <TaskItem
+            id={task.id}
             content={task.content}
             category={task.category}
-            done={task.completed}
+            isCompleted={task.completed}
+            created={task.date_created}
           />
         </li>
       );
     });
   }, [view, isUpdated, TASKS]);
 
-  listRef.current?.lastChild?.scrollIntoView({
+  /* listRef.current?.lastChild?.scrollIntoView({
     behavior: 'smooth',
     block: 'nearest',
     inline: 'end',
-  });
+  }); */
 
   return (
     <div
