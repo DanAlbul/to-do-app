@@ -5,7 +5,7 @@ import { TasksContext } from './Context';
 export const TaskItem = (props) => {
   const [completed, setCompleted] = useState(props.isCompleted);
   const [items, setItems] = useLocalStorage('TASKS_LIST', []);
-  const { isUpdated, setIsUpdated } = useContext(TasksContext);
+  const { view, isUpdated, setIsUpdated } = useContext(TasksContext);
 
   function toggleStatus(e) {
     console.log(e.target);
@@ -25,7 +25,20 @@ export const TaskItem = (props) => {
   }
 
   return (
-    <div className="task-block">
+    <div
+      className={`${completed ? 'completed' : ''} task-block`}
+      onMouseOver={view === 'completed' ? hideLineThrough : null}
+      onMouseOut={view === 'completed' ? showLineThrough : null}
+      style={
+        view === 'completed'
+          ? {
+              outlineColor: 'green',
+              outlineStyle: 'solid',
+              transition: 'text-decoration 100ms',
+            }
+          : {}
+      }
+    >
       <div className="task-main">
         <label>
           <input
@@ -35,13 +48,24 @@ export const TaskItem = (props) => {
             name="task"
             checked={completed}
           />
-          <span className={`${completed ? 'completed' : ''} task`}>
-            {props.content}
+          <span className="task">
+            <span>{props.content}</span>
           </span>
         </label>
       </div>
       <span className={'date-of-creation'}>{props.created}</span>
-      <span className={`task-category ${props.category}`}></span>
+      <span
+        className={`task-category ${props.category}`}
+        datacontent={props.category}
+      ></span>
     </div>
   );
 };
+
+function showLineThrough(e) {
+  e.target.style.textDecorationColor = 'black';
+}
+
+function hideLineThrough(e) {
+  e.target.style.textDecorationColor = 'transparent';
+}

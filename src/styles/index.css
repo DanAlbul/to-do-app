@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500&family=Nunito:wght@400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap');
 @import url('./materialize.min.css');
 
 :root {
@@ -91,6 +91,14 @@ li {
   text-overflow: ellipsis;
 }
 
+.completed .task:hover {
+  text-decoration: none;
+}
+
+.task-block .task span:active {
+  border-bottom: none;
+}
+
 [type='checkbox'] + span:not(.lever) {
   display: inline;
 }
@@ -106,13 +114,27 @@ li {
   border-radius: 6px;
 }
 
+[type='checkbox'].filled-in:not(:checked):hover + span:not(.lever):after {
+  background-color: #26a699b8;
+}
+
+[type='checkbox'].filled-in:not(:checked):active + span:not(.lever):after {
+  background-color: #26a69a;
+}
+
 .task {
   font-size: 1rem;
   margin-left: 1rem;
+  outline: none;
   padding: 0;
   font-family: 'Maven Pro';
   font-weight: 500;
   color: #333;
+}
+
+.task span {
+  text-decoration: line-through;
+  text-decoration-color: transparent;
 }
 
 li {
@@ -131,10 +153,7 @@ li {
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
   padding: 0.5rem 0.2rem;
   margin: 0.5rem 0;
-}
-
-.task-block .task:hover {
-  color: rebeccapurple;
+  transition: underline 1s ease;
 }
 
 .tasks-management {
@@ -211,14 +230,42 @@ li {
 }
 
 .task-category {
-  font-size: 0.8rem;
+  position: relative;
+  font-size: 10px;
   font-family: 'Nunito';
   font-weight: 500;
-  border: 2px solid black;
-  border-radius: 3px;
+  background-color: rgb(226, 147, 0);
+  border-radius: 100%;
   width: 9px;
   height: 9px;
   margin: 0 1rem;
+  /* transition: all 100ms ease-in-out; */
+}
+
+.task-category::after {
+  content: '';
+  position: relative;
+  width: 50px;
+  text-align: center;
+  font-size: 8px;
+  transform-box: border-box;
+  border-radius: 5px;
+  padding: 1px 3px;
+  /*   display: none;
+ */
+  transition: all 400ms ease-in-out;
+}
+
+.task-category:hover {
+  border-radius: 15px;
+  width: 50px;
+  background-color: rgb(226, 147, 0);
+  height: 15px;
+}
+
+.task-category:hover::after {
+  content: attr(datacontent);
+  display: inline-block;
 }
 
 .work-cat {
@@ -241,8 +288,17 @@ li {
   border-color: orange;
 }
 
-.completed {
-  text-decoration: line-through;
+.completed .task span {
+  transition: 100ms;
+  text-decoration-color: #000;
+}
+
+.completed .task:hover {
+  text-decoration-color: transparent;
+}
+
+.date-of-creation {
+  font-family: 'Jost';
 }
 
 .date-of-creation {
