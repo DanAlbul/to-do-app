@@ -3,6 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap');
 @import url('./materialize.min.css');
 
+/* * {
+  border: 1px solid red !important;
+} */
+
 :root {
   --add-task-size: 4rem;
   --input-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
@@ -58,7 +62,7 @@ body {
   height: 414px;
 
   overflow: auto !important;
-  /*  scrollbar-gutter: stable both-edges; */
+  scrollbar-gutter: stable both-edges;
 }
 
 .multiple-list {
@@ -230,62 +234,47 @@ li {
 }
 
 .task-category {
+  padding: 3px;
   position: relative;
-  font-size: 10px;
   font-family: 'Nunito';
   font-weight: 500;
-  background-color: rgb(226, 147, 0);
   border-radius: 100%;
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   margin: 0 1rem;
-  /* transition: all 100ms ease-in-out; */
+  transition: all 250ms ease-in-out;
 }
 
 .task-category::after {
   content: '';
   position: relative;
-  width: 50px;
   text-align: center;
-  font-size: 8px;
-  transform-box: border-box;
+  color: transparent;
+  visibility: hidden;
   border-radius: 5px;
-  padding: 1px 3px;
-  /*   display: none;
- */
-  transition: all 400ms ease-in-out;
+  transition-duration: 250ms;
+  transition-property: all;
 }
 
 .task-category:hover {
   border-radius: 15px;
   width: 50px;
-  background-color: rgb(226, 147, 0);
   height: 15px;
 }
 
 .task-category:hover::after {
+  padding: 1px 3px;
+  width: 50px;
+  top: -7px;
+  left: -3px;
+  font-size: 8px;
   content: attr(datacontent);
+
+  color: #fff;
+  visibility: visible;
   display: inline-block;
-}
-
-.work-cat {
-  border-color: blue;
-}
-
-.health-cat {
-  border-color: green;
-}
-
-.personal-cat {
-  border-color: purple;
-}
-
-.shopping-cat {
-  border-color: red;
-}
-
-.other-cat {
-  border-color: orange;
+  transition: 250ms ease-out 250ms;
+  transition-property: all;
 }
 
 .completed .task span {
