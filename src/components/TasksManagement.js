@@ -25,14 +25,13 @@ export const TasksManagement = () => {
     setValue(''); // clear add task input field
   };
 
-  const createNewTask = (text, cat = 'other') => {
+  const createNewTask = (text, cat = { color: '#333', name: 'Other' }) => {
     if (!text) return;
-
     const uid = Math.floor(Math.random() * Date.now()).toString(16);
     const new_task = {
       content: text,
       completed: false,
-      category: cat,
+      category: { color: cat.color, name: cat.name },
       id: uid,
       date_created: new Date(Date.now()).toLocaleString().split(',')[0], //get date in format "dd/mm/yy", [1] - for time
     };

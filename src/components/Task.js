@@ -55,8 +55,9 @@ export const TaskItem = (props) => {
       </div>
       <span className={'date-of-creation'}>{props.created}</span>
       <span
-        className={`task-category ${props.category}`}
-        datacontent={props.category}
+        className="task-category"
+        style={{ backgroundColor: props.category.color }}
+        datacontent={props.category.name}
       ></span>
     </div>
   );
