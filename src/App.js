@@ -3,8 +3,9 @@ import { Widget } from './components/Widget';
 import { TasksList } from './components/TaskList';
 import { TasksManagement } from './components/TasksManagement';
 import { TasksContext } from './components/Context';
+import { faker } from '@faker-js/faker';
 
-const temp = [
+/* const temp = [
   {
     content: 'Meditate for 12 minutes',
     completed: false,
@@ -27,6 +28,26 @@ const temp = [
     date_created: '09/01/2023',
   },
 ];
+ */
+const generateTasks = () => {
+  const tasks = [];
+  for (let i = 0; i < 500; i++) {
+    const task = {
+      content: faker.lorem.sentence(),
+      completed: faker.datatype.boolean(),
+      category: {
+        color: faker.internet.color(),
+        name: faker.lorem.word(),
+      },
+      id: faker.datatype.uuid(),
+      date_created: faker.date.past().toLocaleString().split(',')[0],
+    };
+    tasks.push(task);
+  }
+  return tasks;
+};
+
+const temp = generateTasks();
 
 export const ToDoApp = ({ tasks }) => {
   const [view, setView] = useState('not-completed');
@@ -46,7 +67,9 @@ export const ToDoApp = ({ tasks }) => {
 
 export const App = () => {
   //window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
-  const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp;
+  const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp; //
   console.log('here 1');
   return <ToDoApp tasks={TASKS} />;
 };
+
+// dropdown

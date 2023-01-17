@@ -56,9 +56,10 @@ export const TasksManagement = () => {
 
   return (
     <div className="tasks-management">
-      <div style={{ position: 'relative' }}>
+      <div className="tasks-management_user-input" style={{ position: 'relative' }}>
         <form>
           <input
+            id="add-task"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             /* onChange={(e) => setItems(createNewTask(e.target.value))} */
@@ -66,6 +67,20 @@ export const TasksManagement = () => {
             name="add-task"
             placeholder="Write a new task"
           />
+          <div className="category-choice-wrapper">
+            <input
+              list="task-categories"
+              id="category-choice"
+              name="category-choice"
+            />
+            <datalist id="task-categories">
+              <option value="Health" />
+              <option value="Personal" />
+              <option value="Shopping" />
+              <option value="Work" />
+              <option value="Other" />
+            </datalist>
+          </div>
           <button
             type="button"
             onClick={submitHandler}

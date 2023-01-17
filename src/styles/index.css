@@ -60,8 +60,8 @@ body {
   padding: 1rem 2rem;
   max-height: 414px;
   height: 414px;
-
-  overflow: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
   scrollbar-gutter: stable both-edges;
 }
 
@@ -168,14 +168,12 @@ li {
   gap: 1rem;
 }
 
-.tasks-management input {
+.tasks-management input[name='add-task'] {
   margin: 0 !important;
-
   background: #fff !important;
   border-radius: 20px !important;
   border: none !important;
-  width: 250px !important;
-  height: var(--add-task-size);
+  width: 330px;
   padding: 0rem 1rem !important;
   box-shadow: var(--input-shadow) !important;
   text-align: left !important;
@@ -294,4 +292,22 @@ li {
   font-size: 11px;
   color: #333;
   margin-right: 2rem;
+}
+
+.category-choice-wrapper {
+  position: absolute;
+  top: 0;
+  right: 46px;
+  height: 100%;
+  width: 80px;
+}
+
+#category-choice {
+  border-bottom: none;
+  height: 80%;
+  margin-top: 4px;
+  border: 1px dashed black;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 15px;
 }
