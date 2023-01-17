@@ -10,6 +10,7 @@ export const TasksManagement = () => {
   const { view, setView, isUpdated, setIsUpdated } = useContext(TasksContext);
   const [value, setValue] = useState('');
   const [items, setItems] = useLocalStorage('TASKS_LIST', []);
+  const [catColor, setCatColor] = useState('#000');
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -54,9 +55,17 @@ export const TasksManagement = () => {
     }
   }
 
+  function handleCatColor(e) {
+    setCatColor(e.target.value);
+    document.documentElement.style.setProperty('--cat-color', catColor);
+  }
+
   return (
     <div className="tasks-management">
-      <div className="tasks-management_user-input" style={{ position: 'relative' }}>
+      <div
+        className="tasks-management_user-input"
+        style={{ position: 'relative' }}
+      >
         <form>
           <input
             id="add-task"
@@ -72,6 +81,7 @@ export const TasksManagement = () => {
               list="task-categories"
               id="category-choice"
               name="category-choice"
+              placeholder="Other"
             />
             <datalist id="task-categories">
               <option value="Health" />
@@ -80,6 +90,11 @@ export const TasksManagement = () => {
               <option value="Work" />
               <option value="Other" />
             </datalist>
+            <input
+              onChange={(e) => handleCatColor(e)}
+              type="color"
+              id="colors"
+            />
           </div>
           <button
             type="button"
