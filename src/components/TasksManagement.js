@@ -1,6 +1,7 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useMemo } from 'react';
 import { TasksContext } from './Context';
 import { useLocalStorage } from './useLocalStorage';
+import { faker } from '@faker-js/faker';
 
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,42 +10,92 @@ import Tooltip from '@mui/material/Tooltip';
 export const TasksManagement = () => {
   const { view, setView, isUpdated, setIsUpdated } = useContext(TasksContext);
   const [value, setValue] = useState('');
+  const [category, setCategory] = useState({
+    type: 'Other',
+    color: '#333',
+    cat_id: 'default_id',
+  });
   const [items, setItems] = useLocalStorage('TASKS_LIST', []);
-  const [catColor, setCatColor] = useState('#000');
+  const [cats, setCats] = useLocalStorage('CATEGORIES_LIST', []);
 
-  const submitHandler = (e) => {
+  const options = useMemo(() => {
+    return cats.map((cat) => {
+      return <option key={cat.cat_id}>{cat.type}</option>;
+    });
+  }, [cats]);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-
-    const tasks = JSON.parse(localStorage.getItem('TASKS_LIST'));
-    const new_task = createNewTask(value) || null;
-    if (!new_task) return;
+    const isTaskCreated = await updateTasksList();
+    if (!isTaskCreated) return;
 
     setIsUpdated(Date.now());
-    setItems([...tasks, new_task]); // update localStorage with new task
-
-    console.log(isUpdated);
     setValue(''); // clear add task input field
   };
 
-  const createNewTask = (text, cat = { color: '#333', name: 'Other' }) => {
-    if (!text) return;
+  const updateTasksList = async () => {
+    if (!value) return false;
+
+    await updateCategoriesList();
+
+    const tasks = [...items];
+    const new_task = createNewTask(value) || null;
+
+    setItems([...tasks, new_task]);
+    return true;
+  };
+
+  const updateCategoriesList = async () => {
+    const categories = [...cats];
+    console.log(category.type);
+    //if category already exists - do not create new category
+    const cat = categories.find((cat) => cat.type === category.type);
+    console.log(cat);
+    if (cat) {
+      setCategory({
+        ...category,
+        cat_id: cat.cat_id,
+      });
+      return;
+    }
+
+    const new_category = {
+      type: category.type,
+      color: category.color,
+      cat_id: faker.datatype.uuid(),
+    };
+
+    setCategory({
+      ...new_category,
+    });
+
+    setCats([...categories, new_category]);
+  };
+
+  function handleCatColor(e) {
+    setCategory({
+      ...category,
+      color: e.target.value,
+    });
+    document.documentElement.style.setProperty('--cat-color', e.target.value);
+  }
+
+  const createNewTask = (text) => {
     const uid = Math.floor(Math.random() * Date.now()).toString(16);
     const new_task = {
       content: text,
       completed: false,
-      category: { color: cat.color, name: cat.name },
+      category: {
+        ...category,
+      },
       id: uid,
       date_created: new Date(Date.now()).toLocaleString().split(',')[0], //get date in format "dd/mm/yy", [1] - for time
     };
-
-    // console.log('new_task', new_task);
 
     return new_task;
   };
 
   function swithView() {
-    console.log(view);
-
     switch (view) {
       case 'completed':
         setView('not-completed');
@@ -53,11 +104,6 @@ export const TasksManagement = () => {
         setView('completed');
         break;
     }
-  }
-
-  function handleCatColor(e) {
-    setCatColor(e.target.value);
-    document.documentElement.style.setProperty('--cat-color', catColor);
   }
 
   return (
@@ -71,31 +117,34 @@ export const TasksManagement = () => {
             id="add-task"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            /* onChange={(e) => setItems(createNewTask(e.target.value))} */
             type="text"
             name="add-task"
             placeholder="Write a new task"
           />
+
           <div className="category-choice-wrapper">
             <input
               list="task-categories"
               id="category-choice"
               name="category-choice"
               placeholder="Other"
+              onChange={(e) =>
+                setCategory({
+                  ...category,
+                  type: e.target.value,
+                })
+              }
+              value={category.type}
             />
-            <datalist id="task-categories">
-              <option value="Health" />
-              <option value="Personal" />
-              <option value="Shopping" />
-              <option value="Work" />
-              <option value="Other" />
-            </datalist>
+            <datalist id="task-categories">{options}</datalist>
             <input
               onChange={(e) => handleCatColor(e)}
               type="color"
               id="colors"
+              value={category.color}
             />
           </div>
+
           <button
             type="button"
             onClick={submitHandler}

@@ -5,40 +5,36 @@ import { TasksManagement } from './components/TasksManagement';
 import { TasksContext } from './components/Context';
 import { faker } from '@faker-js/faker';
 
-/* const temp = [
+const categories = [
   {
-    content: 'Meditate for 12 minutes',
-    completed: false,
-    category: { color: '#800080', name: 'Personal' },
-    id: '001',
-    date_created: '05/12/2022',
+    type: 'Shopping',
+    color: '#f7d000',
+    cat_id: faker.datatype.uuid(),
   },
   {
-    content: 'Take pills and vitamines',
-    completed: false,
-    category: { color: '#ff0000', name: 'Health' },
-    id: '002',
-    date_created: '21/12/2022',
+    type: 'Health',
+    color: '#c60821',
+    cat_id: faker.datatype.uuid(),
   },
   {
-    content: 'Plan your day in to-do app',
-    completed: true,
-    category: { color: '#ffa500', name: 'Work' },
-    id: '003',
-    date_created: '09/01/2023',
+    type: 'Personal',
+    color: '#790e9f',
+    cat_id: faker.datatype.uuid(),
+  },
+  {
+    type: 'Work',
+    color: '#048a1c',
+    cat_id: faker.datatype.uuid(),
   },
 ];
- */
+
 const generateTasks = () => {
   const tasks = [];
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 10; i++) {
     const task = {
       content: faker.lorem.sentence(),
       completed: faker.datatype.boolean(),
-      category: {
-        color: faker.internet.color(),
-        name: faker.lorem.word(),
-      },
+      category: categories[Math.floor(Math.random() * categories.length)],
       id: faker.datatype.uuid(),
       date_created: faker.date.past().toLocaleString().split(',')[0],
     };
@@ -67,9 +63,12 @@ export const ToDoApp = ({ tasks }) => {
 
 export const App = () => {
   //window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
+  //window.localStorage.setItem('CATEGORIES_LIST', JSON.stringify(categories));
   const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp; //
+  const CATS =
+    JSON.parse(window.localStorage.getItem('CATEGORIES_LIST')) || categories;
   console.log('here 1');
-  return <ToDoApp tasks={TASKS} />;
+  return <ToDoApp tasks={TASKS} categories={CATS} />;
 };
 
 // dropdown

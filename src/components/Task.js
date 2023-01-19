@@ -8,7 +8,6 @@ export const TaskItem = (props) => {
   const { view, isUpdated, setIsUpdated } = useContext(TasksContext);
 
   function toggleStatus(e) {
-    console.log(e.target);
 
     const tasks = JSON.parse(localStorage.getItem('TASKS_LIST'));
     const task = tasks.find((task) => task.id === props.id);
@@ -18,8 +17,6 @@ export const TaskItem = (props) => {
 
     setItems(tasks);
 
-    console.log(task);
-
     setCompleted(!completed);
     setIsUpdated(Date.now());
   }
@@ -27,8 +24,8 @@ export const TaskItem = (props) => {
   return (
     <div
       className={`${completed ? 'completed' : ''} task-block`}
-      onMouseOver={view === 'completed' ? hideLineThrough : null}
-      onMouseOut={view === 'completed' ? showLineThrough : null}
+      /*  onMouseOver={view === 'completed' ? hideLineThrough : null}
+      onMouseOut={view === 'completed' ? showLineThrough : null} */
       style={
         view === 'completed'
           ? {
@@ -57,16 +54,17 @@ export const TaskItem = (props) => {
       <span
         className="task-category"
         style={{ backgroundColor: props.category.color }}
-        datacontent={props.category.name}
+        datacontent={props.category.type}
       ></span>
     </div>
   );
 };
 
-function showLineThrough(e) {
+/* function showLineThrough(e) {
   e.target.style.textDecorationColor = 'black';
 }
 
 function hideLineThrough(e) {
   e.target.style.textDecorationColor = 'transparent';
 }
+ */

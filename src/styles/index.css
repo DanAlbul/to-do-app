@@ -96,14 +96,6 @@ li {
   text-overflow: ellipsis;
 }
 
-.completed .task:hover {
-  text-decoration: none;
-}
-
-.task-block .task span:active {
-  border-bottom: none;
-}
-
 [type='checkbox'] + span:not(.lever) {
   display: inline;
 }
@@ -140,6 +132,14 @@ li {
 .task span {
   text-decoration: line-through;
   text-decoration-color: transparent;
+}
+
+.task-block .task span:active {
+  border-bottom: none;
+}
+
+.completed:hover .task span {
+  text-decoration: none;
 }
 
 li {
@@ -299,7 +299,7 @@ li {
 
 .category-choice-wrapper {
   position: absolute;
-  opacity: 0.6;
+  /* opacity: 0.6; */
   top: 0;
   right: 35px;
   height: 100%;

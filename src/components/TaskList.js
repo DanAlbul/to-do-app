@@ -30,7 +30,6 @@ export const TasksList = ({ tasks }) => {
     }
 
     return taskList.map((task) => {
-      console.log('here 2');
       return (
         <li key={task.id}>
           <TaskItem
