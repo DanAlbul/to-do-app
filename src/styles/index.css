@@ -11,7 +11,7 @@
   --add-task-size: 4rem;
   --input-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
     rgba(17, 17, 26, 0.05) 0px 8px 32px;
-  --cat-color: #000;
+  /* --cat-color: #000; */
 }
 html {
   height: 100% !important;
@@ -314,7 +314,6 @@ li {
   right: 0;
   border-bottom: none;
   height: 80%;
-  color: var(--cat-color);
   width: 100%;
   margin-top: 4px;
   z-index: 100;
@@ -372,9 +371,9 @@ input[type='color'] {
   width: 1rem;
 }
 
-#category-choice::placeholder {
-  color: var(--cat-color);
-}
+/* #category-choice::placeholder {
+  opacity: 0.5;
+} */
 
 input[type='color']:active
   + input[type='color']:hover

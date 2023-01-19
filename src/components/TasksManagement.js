@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useMemo } from 'react';
+import { useContext, useState, useEffect, useMemo, useRef } from 'react';
 import { TasksContext } from './Context';
 import { useLocalStorage } from './useLocalStorage';
 import { faker } from '@faker-js/faker';
@@ -10,13 +10,18 @@ import Tooltip from '@mui/material/Tooltip';
 export const TasksManagement = () => {
   const { view, setView, isUpdated, setIsUpdated } = useContext(TasksContext);
   const [value, setValue] = useState('');
+  const inputRef = useRef();
   const [category, setCategory] = useState({
     type: 'Other',
-    color: '#333',
-    cat_id: 'default_id',
+    color: '#3b3b3b',
+    cat_id: 'default_cat_id',
   });
   const [items, setItems] = useLocalStorage('TASKS_LIST', []);
   const [cats, setCats] = useLocalStorage('CATEGORIES_LIST', []);
+
+  const clearInput = () => {
+    inputRef.current.value = '';
+  };
 
   const options = useMemo(() => {
     return cats.map((cat) => {
@@ -29,8 +34,16 @@ export const TasksManagement = () => {
     const isTaskCreated = await updateTasksList();
     if (!isTaskCreated) return;
 
+    // clear input fields
+    setCategory({
+      ...category,
+      cat_id: 'default_cat_id',
+    });
+    console.log('cleared?', { ...category });
+
+    setValue('');
+    clearInput();
     setIsUpdated(Date.now());
-    setValue(''); // clear add task input field
   };
 
   const updateTasksList = async () => {
@@ -39,7 +52,7 @@ export const TasksManagement = () => {
     await updateCategoriesList();
 
     const tasks = [...items];
-    const new_task = createNewTask(value) || null;
+    const new_task = (await createNewTask(value)) || null;
 
     setItems([...tasks, new_task]);
     return true;
@@ -47,14 +60,33 @@ export const TasksManagement = () => {
 
   const updateCategoriesList = async () => {
     const categories = [...cats];
-    console.log(category.type);
+
+    //if category is empty - set default category with chosen color
+    if (category.type === '') {
+      console.log('empty here', category.type);
+
+      setCategory({
+        type: 'Other',
+        color: category.color,
+        cat_id: 'default_cat_id',
+      });
+
+      return;
+    }
+
     //if category already exists - do not create new category
     const cat = categories.find((cat) => cat.type === category.type);
-    console.log(cat);
     if (cat) {
+      console.log('cat', cat);
+      console.log('category_before', category);
+
+      /***  TO-DO: FIX category id to be unset to default
+       * in case when same category was
+       * chosen during
+       * task creation ***/
+
       setCategory({
-        ...category,
-        cat_id: cat.cat_id,
+        ...cat,
       });
       return;
     }
@@ -64,7 +96,7 @@ export const TasksManagement = () => {
       color: category.color,
       cat_id: faker.datatype.uuid(),
     };
-
+    console.log('is code here?');
     setCategory({
       ...new_category,
     });
@@ -72,16 +104,35 @@ export const TasksManagement = () => {
     setCats([...categories, new_category]);
   };
 
-  function handleCatColor(e) {
+  const handleCatColor = async (e) => {
     setCategory({
       ...category,
       color: e.target.value,
     });
-    document.documentElement.style.setProperty('--cat-color', e.target.value);
-  }
+    // document.documentElement.style.setProperty('--cat-color', e.target.value);
+  };
 
-  const createNewTask = (text) => {
+  const handleCategory = async (e) => {
+    const catExists = cats.find((cat) => cat.type === e.target.value);
+
+    if (catExists) {
+      setCategory({
+        type: catExists.type,
+        color: catExists.color,
+        cat_id: catExists.cat_id,
+      });
+      return;
+    }
+    setCategory({
+      ...category,
+      type: e.target.value.trim() ? e.target.value.trim() : 'Other',
+    });
+  };
+
+  const createNewTask = async (text) => {
     const uid = Math.floor(Math.random() * Date.now()).toString(16);
+    console.log('category_after', category);
+
     const new_task = {
       content: text,
       completed: false,
@@ -95,7 +146,7 @@ export const TasksManagement = () => {
     return new_task;
   };
 
-  function swithView() {
+  const swithView = async () => {
     switch (view) {
       case 'completed':
         setView('not-completed');
@@ -104,7 +155,7 @@ export const TasksManagement = () => {
         setView('completed');
         break;
     }
-  }
+  };
 
   return (
     <div className="tasks-management">
@@ -120,6 +171,7 @@ export const TasksManagement = () => {
             type="text"
             name="add-task"
             placeholder="Write a new task"
+            autoComplete="off"
           />
 
           <div className="category-choice-wrapper">
@@ -128,20 +180,16 @@ export const TasksManagement = () => {
               id="category-choice"
               name="category-choice"
               placeholder="Other"
-              onChange={(e) =>
-                setCategory({
-                  ...category,
-                  type: e.target.value,
-                })
-              }
-              value={category.type}
+              ref={inputRef}
+              onChange={(e) => handleCategory(e)}
+              autoComplete="off"
             />
             <datalist id="task-categories">{options}</datalist>
             <input
+              value={category.color}
               onChange={(e) => handleCatColor(e)}
               type="color"
               id="colors"
-              value={category.color}
             />
           </div>
 

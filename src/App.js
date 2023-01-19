@@ -26,6 +26,11 @@ const categories = [
     color: '#048a1c',
     cat_id: faker.datatype.uuid(),
   },
+  {
+    type: 'Other',
+    color: '#3b3b3b',
+    cat_id: 'default_cat_id',
+  },
 ];
 
 const generateTasks = () => {
@@ -62,12 +67,11 @@ export const ToDoApp = ({ tasks }) => {
 };
 
 export const App = () => {
-  //window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
-  //window.localStorage.setItem('CATEGORIES_LIST', JSON.stringify(categories));
+  // window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
+  // window.localStorage.setItem('CATEGORIES_LIST', JSON.stringify(categories));
   const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp; //
   const CATS =
-    JSON.parse(window.localStorage.getItem('CATEGORIES_LIST')) || categories;
-  console.log('here 1');
+    JSON.parse(window.localStorage.getItem('CATEGORIES_LIST')) || categories; //
   return <ToDoApp tasks={TASKS} categories={CATS} />;
 };
 
