@@ -65,17 +65,17 @@ export const TasksManagement = () => {
 
     //if category already exists - do not create new category
     const cat = categories.find((cat) => cat.type === category.type);
-    if (cat) {
-      return;
-    }
+    if (cat) return;
 
     const new_category = {
       type: category.type,
       color: category.color,
       cat_id: faker.datatype.uuid(),
     };
+
     console.log('is code here?');
     setCategory({
+      ...category,
       ...new_category,
     });
 
@@ -103,6 +103,8 @@ export const TasksManagement = () => {
       });
       return;
     }
+
+    
 
     //if category is empty - set default category with chosen color
     if (e.target.value === '') {
