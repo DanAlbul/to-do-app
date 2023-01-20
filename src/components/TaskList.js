@@ -1,9 +1,8 @@
 import { TaskItem } from './Task';
 import { useContext, useState, useMemo, useRef, useEffect } from 'react';
 import { flushSync } from 'react-dom';
-
+import { TaskFilters } from './Filters';
 import { TasksContext } from './Context';
-import { MyLocation } from '@mui/icons-material';
 
 export const TasksList = ({ tasks }) => {
   const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST'));
@@ -50,12 +49,15 @@ export const TasksList = ({ tasks }) => {
     inline: 'end',
   }); */
 
+ 
+
   return (
     <div
       className={`${
         filteredTasks.length > 10 ? 'multiple-list' : ''
       } tasks_wrapper`}
     >
+      <TaskFilters/>
       <ul ref={listRef}>{filteredTasks}</ul>
     </div>
   );
