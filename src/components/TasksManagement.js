@@ -37,6 +37,8 @@ export const TasksManagement = () => {
     // clear input fields
     setCategory({
       ...category,
+      type: 'Other',
+      color: '#3b3b3b',
       cat_id: 'default_cat_id',
     });
     console.log('cleared?', { ...category });
@@ -61,33 +63,9 @@ export const TasksManagement = () => {
   const updateCategoriesList = async () => {
     const categories = [...cats];
 
-    //if category is empty - set default category with chosen color
-    if (category.type === '') {
-      console.log('empty here', category.type);
-
-      setCategory({
-        type: 'Other',
-        color: category.color,
-        cat_id: 'default_cat_id',
-      });
-
-      return;
-    }
-
     //if category already exists - do not create new category
     const cat = categories.find((cat) => cat.type === category.type);
     if (cat) {
-      console.log('cat', cat);
-      console.log('category_before', category);
-
-      /***  TO-DO: FIX category id to be unset to default
-       * in case when same category was
-       * chosen during
-       * task creation ***/
-
-      setCategory({
-        ...cat,
-      });
       return;
     }
 
@@ -116,13 +94,30 @@ export const TasksManagement = () => {
     const catExists = cats.find((cat) => cat.type === e.target.value);
 
     if (catExists) {
+      console.log('it exists');
       setCategory({
+        ...category,
         type: catExists.type,
         color: catExists.color,
         cat_id: catExists.cat_id,
       });
       return;
     }
+
+    //if category is empty - set default category with chosen color
+    if (e.target.value === '') {
+      console.log('empty here', category.type);
+
+      setCategory({
+        ...category,
+        type: 'Other',
+        color: category.color,
+        cat_id: 'default_cat_id',
+      });
+
+      return;
+    }
+
     setCategory({
       ...category,
       type: e.target.value.trim() ? e.target.value.trim() : 'Other',
