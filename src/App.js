@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Widget } from './components/Widget';
 import { TasksList } from './components/TaskList';
 import { TasksManagement } from './components/TasksManagement';
@@ -7,7 +7,7 @@ import { faker } from '@faker-js/faker';
 import { TaskFilters } from './components/Filters';
 import tasks from './data/tasks.json';
 
-const categories = [
+const temp_cats = [
   {
     type: 'Shopping',
     color: '#f7d000',
@@ -41,7 +41,7 @@ const generateTasks = () => {
     const task = {
       content: faker.lorem.sentence(),
       completed: faker.datatype.boolean(),
-      category: categories[Math.floor(Math.random() * categories.length)],
+      category: temp_cats[Math.floor(Math.random() * temp_cats.length)],
       id: faker.datatype.uuid(),
       date_created: faker.date.past().toLocaleString().split(',')[0],
     };
@@ -50,7 +50,7 @@ const generateTasks = () => {
   return tasks;
 };
 
-const temp = generateTasks();
+const temp_tasks = generateTasks();
 
 export const ToDoApp = ({ tasks }) => {
   const [view, setView] = useState('not-completed');
@@ -70,11 +70,13 @@ export const ToDoApp = ({ tasks }) => {
 };
 
 export const App = () => {
-  window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
-  window.localStorage.setItem('CATEGORIES_LIST', JSON.stringify(categories));
-  const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp; //
+  //window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp_tasks));
+  //window.localStorage.setItem('CATEGORIES_LIST', JSON.stringify(temp_cats));
+  const TASKS =
+    JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp_tasks; //
   const CATS =
-    JSON.parse(window.localStorage.getItem('CATEGORIES_LIST')) || categories; //
+    JSON.parse(window.localStorage.getItem('CATEGORIES_LIST')) || temp_cats; //
+
   return <ToDoApp tasks={TASKS} categories={CATS} />;
 };
 

@@ -10,24 +10,24 @@ import Tooltip from '@mui/material/Tooltip';
 export const TasksManagement = () => {
   const { view, setView, isUpdated, setIsUpdated } = useContext(TasksContext);
   const [value, setValue] = useState('');
-  const inputRef = useRef();
   const [category, setCategory] = useState({
     type: 'Other',
     color: '#3b3b3b',
     cat_id: 'default_cat_id',
   });
+  const inputRef = useRef();
   const [items, setItems] = useLocalStorage('TASKS_LIST', []);
   const [cats, setCats] = useLocalStorage('CATEGORIES_LIST', []);
+
+  const categories_list = useMemo(() => {
+    return cats.map((cat) => {
+      return <option key={cat.cat_id}>{cat.type}</option>;
+    });
+  }, [cats, isUpdated]);
 
   const clearInput = () => {
     inputRef.current.value = '';
   };
-
-  const options = useMemo(() => {
-    return cats.map((cat) => {
-      return <option key={cat.cat_id}>{cat.type}</option>;
-    });
-  }, [cats]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -73,7 +73,6 @@ export const TasksManagement = () => {
       cat_id: faker.datatype.uuid(),
     };
 
-    console.log('is code here?');
     setCategory({
       ...category,
       ...new_category,
@@ -103,8 +102,6 @@ export const TasksManagement = () => {
       });
       return;
     }
-
-    
 
     //if category is empty - set default category with chosen color
     if (e.target.value === '') {
@@ -181,7 +178,7 @@ export const TasksManagement = () => {
               onChange={(e) => handleCategory(e)}
               autoComplete="off"
             />
-            <datalist id="task-categories">{options}</datalist>
+            <datalist id="task-categories">{categories_list}</datalist>
             <input
               value={category.color}
               onChange={(e) => handleCatColor(e)}

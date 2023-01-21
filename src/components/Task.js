@@ -8,7 +8,6 @@ export const TaskItem = (props) => {
   const { view, isUpdated, setIsUpdated } = useContext(TasksContext);
 
   function toggleStatus(e) {
-
     const tasks = JSON.parse(localStorage.getItem('TASKS_LIST'));
     const task = tasks.find((task) => task.id === props.id);
     task.completed = !completed;
