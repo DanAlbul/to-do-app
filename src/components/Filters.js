@@ -1,11 +1,19 @@
 import { useState, useRef, useEffect, useMemo, useContext } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 import { TasksContext } from './Context';
+import { Streetview } from '@mui/icons-material';
 
 export const TaskFilters = () => {
   const showCategory = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { isUpdated } = useContext(TasksContext);
+  const {
+    views,
+    setViews,
+    isUpdated,
+    taskFilter,
+    setIsUpdated,
+    setTaskFilter,
+  } = useContext(TasksContext);
   const [catFilters, seCatFilters] = useState([]);
 
   /*   const handleClickOutside = (event) => {
@@ -21,7 +29,19 @@ export const TaskFilters = () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, [showCategory, isOpen]); 
- */
+*/
+
+  const handleFilter = async (e) => {
+    //const CATS = JSON.parse(window.localStorage.getItem('CATEGORIES_LIST'));
+
+    if (!e.target.checked) {
+      setTaskFilter(taskFilter.filter((item) => item !== e.target.value));
+    } else {
+      setTaskFilter((oldFilter) => [...oldFilter, e.target.value]);
+    }
+
+    setIsUpdated(Date.now());
+  };
 
   useEffect(() => {
     const CATS = JSON.parse(window.localStorage.getItem('CATEGORIES_LIST'));
@@ -30,6 +50,7 @@ export const TaskFilters = () => {
         <label key={cat.cat_id} className="filter-item">
           <input
             className="filled-in"
+            onChange={handleFilter}
             type="checkbox"
             name={cat.type.trim()}
             value={cat.type.trim()}

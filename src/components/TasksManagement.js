@@ -8,7 +8,8 @@ import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 
 export const TasksManagement = () => {
-  const { view, setView, isUpdated, setIsUpdated } = useContext(TasksContext);
+  const { views, setViews, isUpdated, setIsUpdated, taskFilter } =
+    useContext(TasksContext);
   const [value, setValue] = useState('');
   const [category, setCategory] = useState({
     type: 'Other',
@@ -141,13 +142,12 @@ export const TasksManagement = () => {
   };
 
   const swithView = async () => {
-    switch (view) {
-      case 'completed':
-        setView('not-completed');
-        break;
-      case 'not-completed':
-        setView('completed');
-        break;
+    const completed = views.includes('completed');
+    console.log(completed);
+    if (!completed) {
+      setViews(['completed']);
+    } else {
+      setViews(['not-completed']);
     }
   };
 
@@ -203,7 +203,9 @@ export const TasksManagement = () => {
         </form>
       </div>
       <Tooltip
-        title={view === 'not-completed' ? 'Show completed' : 'Show ongoing'}
+        title={
+          views.includes('not-completed') ? 'Show completed' : 'Show ongoing'
+        }
         placement="bottom"
       >
         <a

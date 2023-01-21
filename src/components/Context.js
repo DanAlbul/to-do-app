@@ -1,8 +1,10 @@
 import { createContext } from 'react';
 
 export const TasksContext = createContext({
-  view: 'not-completed',
+  views: ['not-completed'],
   setView: () => {},
   isUpdated: '',
   setIsUpdated: () => {},
+  taskFilter: [],
+  setTaskFilter: () => {},
 });

@@ -5,7 +5,7 @@ import { TasksContext } from './Context';
 export const TaskItem = (props) => {
   const [completed, setCompleted] = useState(props.isCompleted);
   const [items, setItems] = useLocalStorage('TASKS_LIST', []);
-  const { view, isUpdated, setIsUpdated } = useContext(TasksContext);
+  const { views, isUpdated, setIsUpdated } = useContext(TasksContext);
 
   function toggleStatus(e) {
     const tasks = JSON.parse(localStorage.getItem('TASKS_LIST'));
@@ -23,10 +23,9 @@ export const TaskItem = (props) => {
   return (
     <div
       className={`${completed ? 'completed' : ''} task-block`}
-      /*  onMouseOver={view === 'completed' ? hideLineThrough : null}
-      onMouseOut={view === 'completed' ? showLineThrough : null} */
+
       style={
-        view === 'completed'
+        views.includes('completed')
           ? {
               outlineColor: 'green',
               outlineStyle: 'solid',
@@ -36,7 +35,7 @@ export const TaskItem = (props) => {
       }
     >
       <div className="task-main">
-        <label>
+        <label title={props.content}>
           <input
             onChange={toggleStatus}
             className="task-checkbox filled-in"

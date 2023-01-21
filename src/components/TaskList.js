@@ -8,7 +8,14 @@ export const TasksList = ({ tasks }) => {
   const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST'));
   const listRef = useRef(null);
 
-  const { view, isUpdated, setIsUpdated } = useContext(TasksContext);
+  const {
+    views,
+    setViews,
+    isUpdated,
+    setIsUpdated,
+    taskFilter,
+    setTaskFilter,
+  } = useContext(TasksContext);
 
   const filteredTasks = useMemo(() => {
     if (isUpdated) {
@@ -16,17 +23,21 @@ export const TasksList = ({ tasks }) => {
         setIsUpdated(!isUpdated);
       }, 250);
     }
+
     let taskList = [];
-    switch (view) {
-      case 'completed':
-        taskList = TASKS.filter((item) => item.completed);
+    const uncompleted = views.includes('completed');
 
-        break;
-
-      case 'not-completed':
-        taskList = TASKS.filter((item) => !item.completed);
-        break;
+    if (taskFilter.length === 0)
+      taskList = TASKS.filter((item) => item.completed === uncompleted);
+    else {
+      taskList = TASKS.filter(
+        (item) =>
+          taskFilter.includes(item.category.type) &&
+          item.completed === uncompleted
+      );
     }
+
+    console.log(taskList);
 
     return taskList.map((task) => {
       return (
@@ -41,7 +52,7 @@ export const TasksList = ({ tasks }) => {
         </li>
       );
     });
-  }, [view, isUpdated, TASKS]);
+  }, [views, isUpdated, TASKS]);
 
   /* listRef.current?.lastChild?.scrollIntoView({
     behavior: 'smooth',

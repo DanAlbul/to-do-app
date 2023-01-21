@@ -53,9 +53,18 @@ const generateTasks = () => {
 const temp_tasks = generateTasks();
 
 export const ToDoApp = ({ tasks }) => {
-  const [view, setView] = useState('not-completed');
+  const [views, setViews] = useState(['not-completed']);
   const [isUpdated, setIsUpdated] = useState('');
-  const value = { view, setView, isUpdated, setIsUpdated };
+  const [taskFilter, setTaskFilter] = useState([]);
+
+  const value = {
+    views,
+    setViews,
+    isUpdated,
+    setIsUpdated,
+    taskFilter,
+    setTaskFilter,
+  };
 
   return (
     <>
