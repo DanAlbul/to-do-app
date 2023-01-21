@@ -1,22 +1,40 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export const TaskFilters = () => {
   const showCategory = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  function toggleCatFilter() {
-    showCategory.current.classList.toggle('show_cat_filter');
+  const handleClickOutside = (event) => {
+    if (event.target !== showCategory.current && isOpen)
+      showCategory.current.classList.remove('show_cat_filter');
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [showCategory, isOpen]);
+
+  function openCatFilter(e) {
+    setIsOpen(!isOpen);
+    console.log(isOpen);
   }
 
   return (
     <div className="task-filters-block">
       <div className="cat-filter-wrapper">
-        <button className="cat-filter-btn" onClick={toggleCatFilter}>
+        <button
+          className="btn-floating waves-effect cat-filter-btn"
+          onClick={(e) => openCatFilter(e)}
+        >
           Categories
         </button>
         <div
           ref={showCategory}
           id="categoryDropdown"
-          className="cat_filter_list"
+          className={`cat_filter_list ${isOpen ? 'show_cat_filter' : ''}`}
         >
           <label className="filter-item">
             <input
@@ -33,7 +51,7 @@ export const TaskFilters = () => {
               type="checkbox"
               name="Work"
               value="Work"
-            />{' '}
+            />
             <span>Work</span>
           </label>
           <label className="filter-item">

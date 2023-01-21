@@ -4,6 +4,8 @@ import { TasksList } from './components/TaskList';
 import { TasksManagement } from './components/TasksManagement';
 import { TasksContext } from './components/Context';
 import { faker } from '@faker-js/faker';
+import { TaskFilters } from './components/Filters';
+import tasks from './data/tasks.json';
 
 const categories = [
   {
@@ -35,7 +37,7 @@ const categories = [
 
 const generateTasks = () => {
   const tasks = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 30; i++) {
     const task = {
       content: faker.lorem.sentence(),
       completed: faker.datatype.boolean(),
@@ -59,6 +61,7 @@ export const ToDoApp = ({ tasks }) => {
     <>
       <TasksContext.Provider value={value}>
         <Widget />
+        <TaskFilters />
         <TasksList tasks={tasks} />
         <TasksManagement />
       </TasksContext.Provider>
@@ -67,8 +70,8 @@ export const ToDoApp = ({ tasks }) => {
 };
 
 export const App = () => {
-  // window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
-  // window.localStorage.setItem('CATEGORIES_LIST', JSON.stringify(categories));
+  window.localStorage.setItem('TASKS_LIST', JSON.stringify(temp));
+  window.localStorage.setItem('CATEGORIES_LIST', JSON.stringify(categories));
   const TASKS = JSON.parse(window.localStorage.getItem('TASKS_LIST')) || temp; //
   const CATS =
     JSON.parse(window.localStorage.getItem('CATEGORIES_LIST')) || categories; //
