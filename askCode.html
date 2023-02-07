@@ -1,0 +1,36 @@
+<!-- create following code: html button with dropdown list appearing on click. List should contain following checkboxes in it: [Health, Work, Personal, Shopping, Other] 
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .dropdown-content {
+        display: none;
+      }
+      .dropdown-content.show {
+        display: block;
+      }
+    </style>
+    <button onclick="myFunction()">Dropdown</button>
+    <div id="myDropdown" class="dropdown-content">
+      <input type="checkbox" name="Health" value="Health" /> Health<br />
+      <input type="checkbox" name="Work" value="Work" /> Work<br />
+      <input type="checkbox" name="Personal" value="Personal" /> Personal<br />
+      <input type="checkbox" name="Shopping" value="Shopping" /> Shopping<br />
+      <input type="checkbox" name="Other" value="Other" /> Other<br />
+    </div>
+
+    <script>
+      function myFunction() {
+        document.getElementById('myDropdown').classList.toggle('show');
+      }
+    </script>
+  </body>
+</html>

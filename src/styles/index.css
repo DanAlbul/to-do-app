@@ -19,6 +19,10 @@ html {
   scroll-behavior: smooth;
 }
 
+li {
+  list-style-type: none;
+}
+
 body {
   height: 100% !important;
   background: #eeeeee;
@@ -90,13 +94,12 @@ li {
   top: 0;
 }
 
-.task-main {
-  height: 2rem;
+/* .task-main {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
+} */
 
 [type='checkbox'] + span:not(.lever) {
   display: inline;
@@ -121,31 +124,10 @@ li {
   background-color: #26a69a;
 }
 
-.task {
-  font-size: 1rem;
-  margin-left: 1rem;
-  outline: none;
-  padding: 0;
-  font-family: 'Maven Pro';
-  font-weight: 500;
-  color: #333;
-}
-
-.task span {
-  text-decoration: line-through;
-  text-decoration-color: transparent;
-}
-
-.task-block .task span:active {
-  border-bottom: none;
-}
-
-.completed:hover .task span {
-  text-decoration: none;
-}
-
-li {
-  list-style-type: none;
+[type='checkbox']:not(:checked),
+[type='checkbox']:checked {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .task-block {
@@ -160,7 +142,57 @@ li {
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
   padding: 0.5rem 0.2rem;
   margin: 0.5rem 0.2rem;
-  transition: underline 1s ease;
+}
+
+.task-checkbox {
+  position: relative;
+  margin-left: 0.5rem;
+  width: 17px;
+  height: 17px;
+}
+
+.task {
+  font-size: 1rem;
+  margin-left: 2.5rem;
+  outline: none;
+  width: 100%;
+  max-width: 300px;
+  padding: 0;
+  font-family: 'Maven Pro';
+  font-weight: 500;
+  height: max-content;
+  max-height: 1.5rem;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /*  white-space: nowrap; */
+  text-decoration: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.task-block .task:active {
+  border-bottom: none;
+}
+
+.completed .active-task {
+  text-decoration: none;
+}
+
+.completed .task {
+  text-decoration: line-through;
+  user-select: none;
+  transition: text-decoration-color 100ms;
+  text-decoration-color: #000;
+  transition: all 0.5s ease-in-out;
+  transition-delay: 0;
+}
+
+.task:hover {
+  max-height: 1000px;
+  cursor: text;
+  white-space: normal;
+  text-decoration-color: transparent;
+  user-select: auto;
 }
 
 .tasks-management {
@@ -268,7 +300,6 @@ li {
 }
 
 .task-category:hover::after {
-  /*  padding: 1px 0 3px 5px; */
   width: inherit;
   top: -2px;
 
@@ -277,18 +308,8 @@ li {
 
   color: #fff;
   visibility: visible;
-  /*   display: inline-block; */
   transition: 250ms ease-out 250ms;
   transition-property: all;
-}
-
-.completed .task span {
-  transition: 100ms;
-  text-decoration-color: #000;
-}
-
-.completed .task:hover {
-  text-decoration-color: transparent;
 }
 
 .date-of-creation {
