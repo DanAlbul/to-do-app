@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { useLocalStorage } from './useLocalStorage'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import { TasksContext } from './Context'
 
 export const TaskItem = (props) => {
