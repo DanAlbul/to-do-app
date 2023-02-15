@@ -165,9 +165,9 @@ li {
   color: #333;
   overflow: hidden;
   text-overflow: ellipsis;
-  /*  white-space: nowrap; */
+  white-space: nowrap;
   text-decoration: none;
-  transition: all 0.5s ease-in-out;
+  transition: max-height 0.5s ease-in-out;
 }
 
 .task-block .task:active {
@@ -175,7 +175,7 @@ li {
 }
 
 .completed .active-task {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .completed .task {
@@ -183,11 +183,11 @@ li {
   user-select: none;
   transition: text-decoration-color 100ms;
   text-decoration-color: #000;
-  transition: all 0.5s ease-in-out;
+  transition: max-height 0.5s ease-in-out;
   transition-delay: 0;
 }
 
-.task:hover {
+.task-block:hover .task {
   max-height: 1000px;
   cursor: text;
   white-space: normal;
@@ -286,7 +286,7 @@ li {
   position: relative;
   text-align: center;
   color: transparent;
-  visibility: hidden;
+  /*  visibility: hidden; */
   border-radius: 5px;
   transition-duration: 250ms;
   transition-property: all;
@@ -511,4 +511,8 @@ input[type='color']:active
   max-width: inherit;
   width: 90%;
   text-align: center;
+}
+
+.filter-item input[type='checkbox'] {
+  visibility: hidden;
 }
