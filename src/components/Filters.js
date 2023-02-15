@@ -1,18 +1,14 @@
 import { useState, useRef, useEffect, useMemo, useContext } from 'react'
-import { useLocalStorage } from './useLocalStorage'
 import { TasksContext } from './Context'
+import { useComponentVisible } from '../hooks/useComponentVisible'
 
 export const TaskFilters = () => {
-  const showCategory = useRef(null)
+  const { showCategoryRef, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(false)
+  //const showCategory = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
-  const {
-    views,
-    setViews,
-    isUpdated,
-    taskFilter,
-    setIsUpdated,
-    setTaskFilter,
-  } = useContext(TasksContext)
+  const { isUpdated, taskFilter, setIsUpdated, setTaskFilter } =
+    useContext(TasksContext)
   const [catFilters, seCatFilters] = useState([])
 
   /*   const handleClickOutside = (event) => {
@@ -31,8 +27,6 @@ export const TaskFilters = () => {
 */
 
   const handleFilter = async (e) => {
-    //const CATS = JSON.parse(window.localStorage.getItem('CATEGORIES_LIST'));
-
     if (!e.target.checked) {
       setTaskFilter(taskFilter.filter((item) => item !== e.target.value))
     } else {
@@ -64,7 +58,12 @@ export const TaskFilters = () => {
   }, [isUpdated])
 
   function openCatFilter(e) {
-    setIsOpen(!isOpen)
+    //setIsOpen(!isOpen)
+
+    setIsComponentVisible(!isComponentVisible)
+    //setIsOpen(!isOpen)
+
+    console.log(isComponentVisible)
   }
 
   return (
@@ -76,9 +75,12 @@ export const TaskFilters = () => {
           Categories
         </button>
         <div
-          ref={showCategory}
+          //ref={showCategory}
+          ref={showCategoryRef}
           id='categoryDropdown'
-          className={`cat_filter_list ${isOpen ? 'show_cat_filter' : ''}`}>
+          className={`cat_filter_list ${
+            isComponentVisible ? 'show_cat_filter' : ''
+          }`}>
           {catFilters}
         </div>
       </div>
